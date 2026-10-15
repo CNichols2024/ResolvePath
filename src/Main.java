@@ -15,32 +15,61 @@ public class Main {
         );
         TroubleshootingNode node2 = new TroubleshootingNode(
                     "NET002",
-                    "Are the user on a production network?",
+                    "Is the user on a production network?",
                     false
                 );
         TroubleshootingNode node3 = new TroubleshootingNode(
             "NET003",
             "Connect user to a network",
-            false
+            true
         );
         TroubleshootingNode node4 = new TroubleshootingNode(
             "NET004",
-            "Can the user access Mobility Advisor?",
+            "Can the user access the Mobility Advisor login page?",
             false
         );
         TroubleshootingNode node5 = new TroubleshootingNode(
             "NET005",
+            "Is the user on VPN?",
+            false
+        );
+ /*       TroubleshootingNode node6 = new TroubleshootingNode(
+            "NET006",
             "Can the user...",
             false   
         );
-        
-
+        TroubleshootingNode node7 = new TroubleshootingNode(
+            "NET007",
+            "Can the user...",
+            false   
+        );
+        TroubleshootingNode node8 = new TroubleshootingNode(
+            "NET008",
+            "Can the user...",
+            false   
+        );
+        TroubleshootingNode node9 = new TroubleshootingNode(
+            "NET009",
+            "Can the user...",
+            false   
+        );
+        TroubleshootingNode node10 = new TroubleshootingNode(
+            "NET010",
+            "Can the user...",
+            false   
+        );
+*/ 
 //Add nodes
         engine.addNode(node1);
         engine.addNode(node2);
         engine.addNode(node3);
         engine.addNode(node4);
         engine.addNode(node5);
+        engine.addNode(node6);
+        engine.addNode(node7);
+        engine.addNode(node8);
+        engine.addNode(node9);
+        engine.addNode(node10);
 //Node paths
     //Node1    
         node1.setYesNodeId("NET002");
@@ -49,9 +78,16 @@ public class Main {
         node2.setYesNodeId("NET004");
         node2.setNoNodeId("NET005");
     //Node3
-        node3.setYesNodeId("NET004");
-        node3.setNoNodeId("NET005");
+        //Is solution
     //Node4
+    //Node5
+        node5.setYesNodeId("NET004");
+        node5.setNoNodeId("NET003");
+    //Node6
+    //Node7
+    //Node8
+    //Node9
+    //Node10
 
         Scanner scanner = new Scanner(System.in); //userInput
 
@@ -67,13 +103,12 @@ public class Main {
 
                 if (!userInput.equalsIgnoreCase("yes") && !userInput.equalsIgnoreCase("no")) { //If input is not yes/no
                     System.out.println("Invalid entry. Please try again. ");
-
-
                 }
             }
             answer = userInput.equalsIgnoreCase("yes");
             currentNode = engine.navigate(currentNode, answer);
         }
+        
         if (currentNode == null) {
             System.err.println("Error: Troubleshooting path not found");
         } else {
