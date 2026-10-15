@@ -15,7 +15,7 @@ public class TroubleshootingEngine {
         return nodes.get(id);
     }
 
-    public TroubleshootingNode navigate( //Navigation moved to the engine instead of main
+    public TroubleshootingNode navigate( //Yes/No Navigation
         TroubleshootingNode currentNode,
         boolean answer) {
             String nextId;
@@ -26,5 +26,9 @@ public class TroubleshootingEngine {
             }
             return getNode(nextId);
         }
+    public TroubleshootingNode navigate( TroubleshootingNode currentNode, String answer) {
+        String nextId = currentNode.getNextNodeId(answer);
+        return getNode(nextId);
+    }
     
 }

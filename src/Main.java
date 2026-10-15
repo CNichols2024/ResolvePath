@@ -15,7 +15,7 @@ public class Main {
         );
         TroubleshootingNode node2 = new TroubleshootingNode(
                     "NET002",
-                    "Is the user on a production network?",
+                    "Which network are they on?",
                     false
                 );
         TroubleshootingNode node3 = new TroubleshootingNode(
@@ -59,18 +59,35 @@ public class Main {
             false   
         );
 */ 
-//Add nodes
+//Add nodes & choices
         engine.addNode(node1);
         engine.addNode(node2);
+            node2.addChoice("vpn", "NET003");
+            node2.addChoice("production", "NET004");
+            node2.addChoice("guest", "NET005");
+            node2.addChoice("disconnected", "NET006");
+            node2.addChoice("other", null);
+            //temp checks
+            System.out.println("VPN leads to: " + node2.getNextNodeId("VPN"));
+            System.out.println("Production leads to: " + node2.getNextNodeId("Production"));
         engine.addNode(node3);
         engine.addNode(node4);
         engine.addNode(node5);
-        engine.addNode(node6);
-        engine.addNode(node7);
-        engine.addNode(node8);
-        engine.addNode(node9);
-        engine.addNode(node10);
-//Node paths
+        //engine.addNode(node6);
+        //engine.addNode(node7);
+        //engine.addNode(node8);
+        //engine.addNode(node9);
+        //engine.addNode(node10);
+        TroubleshootingNode testNode = engine.navigate(node2, "VPN");
+        if (testNode != null) {
+            System.out.println("Destination ID: " + testNode.getId());
+            System.out.println("Destination message: " + testNode.getMessage());
+        } else {
+            System.out.println("Destination not found.");
+        }
+
+//Node paths for Yes/No
+// !!!!!!
     //Node1    
         node1.setYesNodeId("NET002");
         node1.setNoNodeId("NET003");
@@ -108,7 +125,7 @@ public class Main {
             answer = userInput.equalsIgnoreCase("yes");
             currentNode = engine.navigate(currentNode, answer);
         }
-        
+
         if (currentNode == null) {
             System.err.println("Error: Troubleshooting path not found");
         } else {
@@ -124,7 +141,25 @@ public class Main {
             System.out.println("Error: Troubleshooting node does not exist");
         }
         
-        
+        System.out.println(node2.getMessage());
+        System.out.println("Available choices:");
+        for (String choice : node2.getAvailablechoices()) {
+            System.out.println("- " + choice);
+        }
+        System.out.println("Enter your choice: ");
+        String selectedChoice = scanner.nextLine().trim();
+
+        TroubleshootingNode selectedNode = engine.navigate(node2, selectedChoice);
+
+        if (selectedNode != null) {
+            System.out.println("Next node: " + selectedNode.getId());
+            System.out.println(selectedNode.getMessage());
+        } else {
+            System.out.println("Invalid choice or destination not found");
+        }
+
+
+
         scanner.close();
 } //End of main()
 
